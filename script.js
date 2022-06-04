@@ -38,4 +38,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+function newArrayGenerator(productsInformation) {
+  const newArray = productsInformation;
+  newArray.forEach((elemento) => {
+    const ArrayObject = elemento;
+    ArrayObject.sku = ArrayObject.id;
+    ArrayObject.name = ArrayObject.title;
+    ArrayObject.image = ArrayObject.thumbnail;
+    delete ArrayObject.id;
+    delete ArrayObject.title;
+    delete ArrayObject.thumbnail;
+  });
+  return newArray;
+}
+
+function appendProductBoard(listChanged) {
+  const productBoard = document.querySelector('.items');
+  listChanged.forEach((elemento) => {
+    productBoard.appendChild(createProductItemElement(elemento));
+  });
+}
+
+async function CreateProductsBoard() {
+  const data = await fetchProducts('computador');
+  const ResultsChanged = newArrayGenerator(data.results);
+  appendProductBoard(ResultsChanged);
+}
+
+CreateProductsBoard();
+
 window.onload = () => { };
