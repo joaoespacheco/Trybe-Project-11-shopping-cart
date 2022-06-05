@@ -38,20 +38,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-function newArrayGenerator(productsInformation) {
-  const newArray = productsInformation;
-  newArray.forEach((elemento) => {
-    const ArrayObject = elemento;
-    ArrayObject.sku = ArrayObject.id;
-    ArrayObject.name = ArrayObject.title;
-    ArrayObject.image = ArrayObject.thumbnail;
-    delete ArrayObject.id;
-    delete ArrayObject.title;
-    delete ArrayObject.thumbnail;
-  });
-  return newArray;
-}
-
 function appendProductBoard(listChanged) {
   const productBoard = document.querySelector('.items');
   listChanged.forEach((elemento) => {
@@ -59,12 +45,44 @@ function appendProductBoard(listChanged) {
   });
 }
 
-async function CreateProductsBoard() {
-  const data = await fetchProducts('computador');
-  const ResultsChanged = newArrayGenerator(data.results);
-  appendProductBoard(ResultsChanged);
+async function CreateProductsBoard(endPoint) {
+  const data = await fetchProducts(endPoint);
+  const { results } = data;
+  const resultsChanged = results.map(({ id, title, thumbnail }) => ({
+    sku: id,
+    name: title,
+    image: thumbnail,
+  }));
+  appendProductBoard(resultsChanged);
 }
 
-CreateProductsBoard();
+function appendCartItemBoard(itemChanged) {
+  const itemBoard = document.querySelector('.cart__items');
+  itemBoard.appendChild(createCartItemElement(itemChanged));
+}
 
-window.onload = () => { };
+async function CreateCartItemBoard(endPoint) {
+  const item = await fetchItem(endPoint);
+  const { id, title, thumbnail, price } = item;
+  const itemChanged = {
+    sku: id,
+    name: title,
+    image: thumbnail,
+    salePrice: price,
+  };
+  appendCartItemBoard(itemChanged);
+}
+
+const buttomAdd = document.querySelector('.items');
+
+buttomAdd.addEventListener('click', (event) => {
+  if (event.target.classList.value === 'item__add') {
+    const fatherNode = event.target.parentNode;
+    const childSku = fatherNode.childNodes[0];
+    CreateCartItemBoard(childSku.innerText);
+  }
+});
+
+window.onload = () => {
+  CreateProductsBoard('computador');
+};
