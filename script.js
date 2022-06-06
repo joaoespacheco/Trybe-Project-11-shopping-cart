@@ -129,6 +129,21 @@ buttonEmptyCart.addEventListener('click', () => {
   saveCartItems(savedItems);
 });
 
-window.onload = () => {
-  CreateProductsBoard('computador');
+function loading(status) {
+  const boardItems = buttomAdd;
+  if (status === 'loadingOn') {
+    const divLoading = document.createElement('section');
+    divLoading.classList = 'loading';
+    divLoading.innerText = '...loading';
+    boardItems.appendChild(divLoading);
+  } else {
+    const loadingNode = document.querySelector('.loading');
+    loadingNode.remove();
+  }
+}
+
+window.onload = async () => {
+  loading('loadingOn');
+  await CreateProductsBoard('computador');
+  loading('loadingOff');
 };
