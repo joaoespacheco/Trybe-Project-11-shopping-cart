@@ -1,3 +1,5 @@
+let savedItems = [];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,9 +28,15 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+function removeSavedItems(eventTarget) {
+  savedItems = savedItems.filter(({ sku }) => !eventTarget.innerText.includes(sku));
+  saveCartItems(savedItems);
+}
+
 const cartItemClickListener = (event) => {
   const fatherElement = document.querySelector('.cart__items');
   fatherElement.removeChild(event.target);
+  removeSavedItems(event.target);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -36,6 +44,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  savedItems.push({ sku, name, salePrice });
   return li;
 };
 
@@ -44,6 +53,20 @@ function appendProductBoard(listChanged) {
   listChanged.forEach((elemento) => {
     productBoard.appendChild(createProductItemElement(elemento));
   });
+}
+
+function appendCartItemBoard(itemChanged) {
+  const itemBoard = document.querySelector('.cart__items');
+  itemBoard.appendChild(createCartItemElement(itemChanged));
+  saveCartItems(savedItems);
+}
+
+function getSavedStartItems() {
+  const storegeItemsSaved = JSON.parse(getSavedCartItems());
+  sessionStorage.removeItem('CartItem');
+  if (storegeItemsSaved !== null) {
+    storegeItemsSaved.forEach((elemento) => appendCartItemBoard(elemento));
+  }
 }
 
 async function CreateProductsBoard(endPoint) {
@@ -55,11 +78,7 @@ async function CreateProductsBoard(endPoint) {
     image: thumbnail,
   }));
   appendProductBoard(resultsChanged);
-}
-
-function appendCartItemBoard(itemChanged) {
-  const itemBoard = document.querySelector('.cart__items');
-  itemBoard.appendChild(createCartItemElement(itemChanged));
+  getSavedStartItems();
 }
 
 async function CreateCartItemBoard(endPoint) {
