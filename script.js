@@ -45,7 +45,7 @@ function createTotalPrice() {
 
 function removeSavedItems(eventTarget) {
   const itemToRemove = savedItems.find(({ sku }) => eventTarget.innerText.includes(sku));
-  savedItems.splice(itemToRemove, 1);
+  savedItems.splice(savedItems.indexOf(itemToRemove), 1);
   saveCartItems(savedItems);
   if (savedItems.length > 0) createTotalPrice();
   else hideTagTotalPrice();
