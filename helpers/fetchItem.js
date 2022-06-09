@@ -1,9 +1,16 @@
-const fetchItem = async (endPoint) => {
-  const url = `https://api.mercadolibre.com/items/${endPoint}`;
+const fetchItem = async (productSku) => {
+  const url = `https://api.mercadolibre.com/items/${productSku}`;
   try {
     const response = await fetch(url);
     const item = await response.json();
-    return item;
+    const { id, title, thumbnail, price } = item;
+    const productItem = {
+      sku: id,
+      name: title,
+      image: thumbnail,
+      salePrice: price,
+    };
+    return productItem;
   } catch (error) {
     return error;
   }

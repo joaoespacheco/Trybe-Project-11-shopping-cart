@@ -77,6 +77,7 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  background: linear-gradient(135deg, rgba(3, 52, 45, 0.863), rgba(70, 106, 101, 0.856));
 }
 
 .title strong {
@@ -85,7 +86,7 @@ body {
 
 .items {
   display: flex;
-  flex-basis: 70%;
+  flex-basis: 69.2%;
   flex-wrap: wrap;
   justify-content: center;
   margin: 40px 0;
@@ -96,10 +97,13 @@ body {
   flex-direction: column;
   height: auto;
   margin: 5px;
-  width: 200px;
+  width: 30%;
   border: 2px solid rgb(234, 234, 233);
-  border-radius: 5px;
+  border-radius: 20px;
   box-sizing: border-box;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 0 5px black;
 }
 
 .item .item__sku {
@@ -108,42 +112,79 @@ body {
 
 .item .item__title {
   display: flex;
-  align-items: center;
-  flex-grow: 1;
-  padding: 10px;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
+  font-size: 18px;
+  padding: 3px 0 5px;
 }
 
 .item .item__image {
+  flex-grow: 1;
   width: 100%;
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
+  background-color: rgba(3, 52, 45, 0.938);
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 10px;
   color: white;
+  border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: medium;
+  font-weight: 700;
 }
 
 .cart {
+  position: static;
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
   background-color: rgb(241, 241, 238);
-  height: 100vh;
+  height: min-content;
+  padding: 10px 5px 10px 10px;
+  row-gap: 15px;
+  border-radius: 3px;
 }
 
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  background-color: white;
+  box-shadow: 0 0 5px black;
+  border-radius: 3px;
+}
+
+.cart__items .cart__item {
+  padding: 5px 0 0 5px;
+  line-height: 20px;
+}
+
+.total-price {
+  background-color: white;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+  padding: 10px;
+  text-decoration: underline;
+  box-shadow: 0 0 5px black;
+  border-radius: 3px;
 }
 
 .empty-cart {
-  width: 170px;
-  height: 35px;
-  margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  background-color: rgba(3, 52, 45, 0.938);
+  color: white;
+  border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: larger;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
 }

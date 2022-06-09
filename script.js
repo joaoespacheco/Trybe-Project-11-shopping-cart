@@ -1,3 +1,7 @@
+const TotalPriceNode = document.querySelector('.total-price');
+const cartItemsNode = document.querySelector('.cart__items');
+const itemsNode = document.querySelector('.items');
+const EmptyCartNode = document.querySelector('.empty-cart');
 let savedItems = [];
 
 const createProductImageElement = (imageSource) => {
@@ -17,76 +21,75 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const totalPrice = document.querySelector('.total-price');
+const hideTagTotalPrice = () => {
+  const node = TotalPriceNode;
+  node.innerText = '';
+};
 
-function costOfShopping() {
+function createTotalPrice() {
   const arraySavedItems = savedItems;
-  const nodeTotalPrice = totalPrice;
   let totalCost = 0;
-  nodeTotalPrice.innerText = '';
   arraySavedItems.forEach(({ salePrice }) => { (totalCost += salePrice); });
-  nodeTotalPrice.innerText = `${Math.round((totalCost + Number.EPSILON) * 100) / 100}`;
+  const BrlFormat = totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  TotalPriceNode.innerText = `Custo Total: ${BrlFormat}`;
 }
 
 function removeSavedItems(eventTarget) {
-  savedItems = savedItems.filter(({ sku }) => !eventTarget.innerText.includes(sku));
+  const itemToRemove = savedItems.find(({ sku }) => eventTarget.innerText.includes(sku));
+  savedItems.splice(itemToRemove, 1);
   saveCartItems(savedItems);
-  costOfShopping();
+  if (savedItems.length > 0) createTotalPrice();
+  else hideTagTotalPrice();
 }
 
-const cartItems = document.querySelector('.cart__items');
-
 const cartItemClickListener = (event) => {
-  const fatherElement = cartItems;
+  const fatherElement = cartItemsNode;
   fatherElement.removeChild(event.target);
   removeSavedItems(event.target);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
+  const BrlFormat = salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `[Cod. ${sku}] - ${name}
+  Custo unitário: ${BrlFormat}`;
   li.addEventListener('click', cartItemClickListener);
   savedItems.push({ sku, name, salePrice });
   return li;
 };
 
-function appendProductBoard(listChanged) {
-  const productBoard = document.querySelector('.items');
-  listChanged.forEach((elemento) => {
-    productBoard.appendChild(createProductItemElement(elemento));
-  });
-}
-
-function appendCartItemBoard(itemChanged) {
-  const itemBoard = cartItems;
-  itemBoard.appendChild(createCartItemElement(itemChanged));
+function appendCartItemBoard(productObj) {
+  const fatherNode = cartItemsNode;
+  fatherNode.appendChild(createCartItemElement(productObj));
   saveCartItems(savedItems);
-  costOfShopping();
+  createTotalPrice();
 }
 
 function getSavedStartItems() {
-  const storegeItemsSaved = JSON.parse(getSavedCartItems());
+  const storageItemsSaved = JSON.parse(getSavedCartItems());
   sessionStorage.removeItem('CartItem');
-  if (storegeItemsSaved !== null) {
-    storegeItemsSaved.forEach((elemento) => appendCartItemBoard(elemento));
+  if (storageItemsSaved !== null) {
+    storageItemsSaved.forEach((productObj) => appendCartItemBoard(productObj));
   }
 }
 
-async function CreateProductsBoard(endPoint) {
-  const data = await fetchProducts(endPoint);
-  const { results } = data;
+function appendProductBoard(productsArray) {
+  const productBoard = document.querySelector('.items');
+  productsArray.forEach((product) => productBoard.appendChild(createProductItemElement(product)));
+}
+
+async function CreateProductsBoard(productCategory) {
+  const { results } = await fetchProducts(productCategory);
   const resultsChanged = results.map(({ id, title, thumbnail }) => ({
     sku: id,
     name: title,
@@ -96,46 +99,29 @@ async function CreateProductsBoard(endPoint) {
   getSavedStartItems();
 }
 
-async function CreateCartItemBoard(endPoint) {
-  const item = await fetchItem(endPoint);
-  const { id, title, thumbnail, price } = item;
-  const itemChanged = {
-    sku: id,
-    name: title,
-    image: thumbnail,
-    salePrice: price,
-  };
-  appendCartItemBoard(itemChanged);
+async function CreateCartItemBoard(productSku) {
+  const { sku, name, image, salePrice } = await fetchItem(productSku);
+  appendCartItemBoard({ sku, name, image, salePrice });
 }
 
-const buttomAdd = document.querySelector('.items');
-
-buttomAdd.addEventListener('click', (event) => {
+itemsNode.addEventListener('click', (event) => {
   if (event.target.classList.value === 'item__add') {
-    const fatherNode = event.target.parentNode;
-    const childSku = fatherNode.childNodes[0];
-    CreateCartItemBoard(childSku.innerText);
+    CreateCartItemBoard(getSkuFromProductItem(event.target.parentNode));
   }
 });
 
-const buttonEmptyCart = document.querySelector('.empty-cart');
-
-buttonEmptyCart.addEventListener('click', () => {
-  const boardCartItems = cartItems;
-  const totalCost = totalPrice;
+EmptyCartNode.addEventListener('click', () => {
+  const boardCartItems = cartItemsNode;
   boardCartItems.innerHTML = '';
-  totalCost.innerText = '';
+  hideTagTotalPrice();
   savedItems = [];
   saveCartItems(savedItems);
 });
 
 function loading(status) {
-  const boardItems = buttomAdd;
+  const boardItems = itemsNode;
   if (status === 'loadingOn') {
-    const divLoading = document.createElement('section');
-    divLoading.classList = 'loading';
-    divLoading.innerText = '...loading';
-    boardItems.appendChild(divLoading);
+    boardItems.appendChild(createCustomElement('section', 'loading', '...loading'));
   } else {
     const loadingNode = document.querySelector('.loading');
     loadingNode.remove();
