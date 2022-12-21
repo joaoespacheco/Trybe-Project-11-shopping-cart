@@ -10,6 +10,7 @@ Os dados dos produtos utilizados foram obtidos através da [API](https://develop
 
 Além das tarefas realizadas com funções assíncronas durante as requisições, também foram implementados neste projeto testes unitários com enfâse na metodologia de TDD ([Test Driven Development](https://www.devmedia.com.br/test-driven-development-tdd-simples-e-pratico/18533)).
 
+</br>
 <details>
 <summary><strong>Desempenho</strong></summary>
 Aprovado com 100% de desempenho em todos os requisitos
@@ -37,22 +38,20 @@ Requisitos Obrigatórios:
 <summary><strong>Visualizar projeto</strong></summary>
 :construction: Área em construção ! :construction:
 </details>
+</br>
 
 ## 🤹🏽 Habilidades Desenvolvidas:
 * Uso de funções assíncronas e requisições para API's
 * Implementação de testes unitários e utilização de metodologia TDD
 * Desenvolvimento de uma página web dinâmica utilizando HTML, CSS e JavaScript
+</br>
 
 ## 🧰 Ferramentas:
 * HTML5
 * CSS3
 * JavaScript
 * Jest
+</br>
 
 ## 📝 Desenvolvido por:
 * [João Emanuel Soares Pacheco](https://github.com/joaoespacheco)
-
-
-
-
-
