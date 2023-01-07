@@ -14,13 +14,15 @@ Além das tarefas realizadas com funções assíncronas durante as requisições
 <details>
 <summary><strong>Desempenho</strong></summary>
 Aprovado com 100% de desempenho em todos os requisitos
+
+![image](https://user-images.githubusercontent.com/99846604/211168949-ca28fde5-89f2-4327-b0a1-327b2e808be3.png)
+
 </details>
 
 <details>
 <summary><strong>Requisitos</strong></summary>
-Requisitos Obrigatórios: 
 </br>
-</br>
+<strong>Requisitos obrigatórios:</strong> </br>
 1. (TDD) Desenvolva testes de no mínimo 25% de cobertura total e 100% da função `fetchProducts` </br>
 2. Crie uma listagem de produtos </br>
 3. (TDD) Desenvolva testes de no mínimo 50% de cobertura total e 100% da função `fetchItem` </br>
@@ -36,7 +38,9 @@ Requisitos Obrigatórios:
 
 <details>
 <summary><strong>Visualizar projeto</strong></summary>
-:construction: Área em construção ! :construction:
+
+![image](https://user-images.githubusercontent.com/99846604/211168924-ba69bed1-431a-4f98-91f0-98ca0772d106.png)
+
 </details>
 </br>
 
