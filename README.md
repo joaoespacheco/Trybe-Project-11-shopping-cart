@@ -44,6 +44,30 @@ Aprovado com 100% de desempenho em todos os requisitos
 </details>
 </br>
 
+## ⚙️ Execução
+
+Faça o clone deste repositório utilizando o comando abaixo:
+
+        git clone git@github.com:joaoespacheco/Trybe-Project-11-shopping-cart.git
+
+Instale as dependências do projeto com o seguinte comando:
+
+        npm install
+
+Para exeutar os testes deve-se utilizar o seguinte comando:
+
+        npm test
+
+Caso queira executar um teste específico, rode o comando abaixo:
+
+        npm test <nome-do-arquivo>
+
+Para executar e verificar a cobertura de testes, rode o comando abaixo:
+
+        npm run test:coverage
+
+</br>
+
 ## 🤹🏽 Habilidades Desenvolvidas:
 * Uso de funções assíncronas e requisições para API's
 * Implementação de testes unitários e utilização de metodologia TDD
