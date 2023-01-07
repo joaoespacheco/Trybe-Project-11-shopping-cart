@@ -39,6 +39,8 @@ Aprovado com 100% de desempenho em todos os requisitos
 <details>
 <summary><strong>Visualizar projeto</strong></summary>
 
+### Tela principal:
+
 ![image](https://user-images.githubusercontent.com/99846604/211168924-ba69bed1-431a-4f98-91f0-98ca0772d106.png)
 
 </details>
