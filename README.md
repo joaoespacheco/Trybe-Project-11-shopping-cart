@@ -44,6 +44,11 @@ Aprovado com 100% de desempenho em todos os requisitos
 ![image](https://user-images.githubusercontent.com/99846604/211168924-ba69bed1-431a-4f98-91f0-98ca0772d106.png)
 
 </details>
+
+</br>
+
+### Confira o projeto [clicando aqui](https://shopping-cart-joaoespacheco.vercel.app/)
+
 </br>
 
 ## ⚙️ Execução
