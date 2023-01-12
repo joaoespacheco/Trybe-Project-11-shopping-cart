@@ -57,7 +57,7 @@ Faça o clone deste repositório utilizando o comando abaixo:
 
         git clone git@github.com:joaoespacheco/Trybe-Project-11-shopping-cart.git
 
-Instale as dependências do projeto com o seguinte comando:
+Dentro da pasta raiz do projeto, instale as dependências com o seguinte comando:
 
         npm install
 
