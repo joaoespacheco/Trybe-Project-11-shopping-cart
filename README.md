@@ -37,7 +37,7 @@ Aprovado com 100% de desempenho em todos os requisitos
 </details>
 
 <details>
-<summary><strong>Visualizar projeto</strong></summary>
+<summary><strong>Imagens do projeto</strong></summary>
 
 ### Tela principal:
 
@@ -47,7 +47,7 @@ Aprovado com 100% de desempenho em todos os requisitos
 
 </br>
 
-### Confira o projeto [clicando aqui](https://shopping-cart-joaoespacheco.vercel.app/)
+### [👨‍💻 Clique aqui para acessar o projeto em seu navegador](https://shopping-cart-joaoespacheco.vercel.app/) 
 
 </br>
 
